@@ -1,35 +1,46 @@
 var sensorModel = require("../models/sensorModel");
 
 function graficoDiario(req, res) {
-    var idPlant = req.body.idPlant;
+    var idPLANTACAO = req.body.idPLANTACAO;
 
-    if (idPlant == undefined) {
-        res.status(400).send("Plantação não definida (gráfico diário)");
-    }
-
-    sensorModel.graficoDiario(idPlant)
-    .then(function(resposta){
-        
-        res.status(200).send("Gráfico diário selecionado");
-    }
-        ).catch(function(erro){
-        res.status(500).json(erro.sqlMensage);
-        }
-    )
+  if (idPLANTACAO == undefined) {
+    res.status(400).send("Algum parametro está undefined!");
+  } else {
+    sensorModel
+      .graficoDiario(idPLANTACAO)
+      .then(function (resultado) {
+        res.json(resultado);
+        res.status(200);
+      })
+      .catch(function (erro) {
+        console.log(erro);
+        console.log(
+          "\nErro graficoDiario ",
+          erro.sqlMessage
+        );
+        res.status(500).json(erro.sqlMessage);
+      });
+  }
 }
 
 function graficoMensal(req, res) {
-    var idPlant = req.body.idPlant
+    var idPLANTACAO = req.body.idPLANTACAO;
 
-    if (idPlant == undefined) {
-        res.status(400).send("Plantação não definida (gráfico mensal)");
-    }
+    sensorModel
+    .graficoMensal(idPLANTACAO)
+    .then(function (resultado) {
+      res.json(resultado);
 
-    sensorModel.graficoMensal(idPlant).then(function(resposta){
-        res.status(200).send("Gráfico mensal selecionado")
-    }).catch(function(erro){
-        res.status(500).json(erro.sqlMensage);
+      res.status(200).json(resultado); // Define o status antes de enviar o JSON
     })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log(
+        "\nErro graficoMensal ",
+        erro.sqlMessage
+      );
+      res.status(500).json(erro.sqlMessage);
+    });
 }
 
 function umiMax(req, res) {
