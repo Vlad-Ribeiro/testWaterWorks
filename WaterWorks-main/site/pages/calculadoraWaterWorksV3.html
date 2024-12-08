@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaterWorks | Soluções de Monitoramento de Umidade para Café</title>
+    <link rel="stylesheet" href="../css/estiloCalculadora.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" href="../imgs - Home/icons/ww icon.png" type="img/png">
+</head>
+
+<body>
+  <header>
+    <div class="logoWW">
+        <a href="../index.html#banner">
+            <img src="../imgs - Home/logoWW.png" alt="WaterWorks">
+            <li>ater Works</li>
+        </a>
+    </div>
+    <div class="opcoes">
+        <li><a href="./calculadoraWaterWorksV3.html">Simulador</a></li>
+        <li><a href="../index.html#tecnologia">Nossa Tecnologia</a></li>
+        <!-- <li><a href="#dashboard">Dashboard</a></li> -->
+        <li><a href="./monitoramento.html">O que é Monitoramento?</a></li>
+        <li><a href="./sobrenos.html">Sobre a WaterWorks</a></li>
+    </div>
+    <div class="entrar">
+        <a href="./login.html">
+            <div class="login">Login</div>
+        </a>
+        <a href="./tela_de_cadastro.html">
+            <div class="registrar">Cadastrar</div>
+        </a>
+        <!-- <a href="./pages/login.html"><img src="./imgs - Home/icons/imagem-do-usuario-com-fundo-preto.png"alt=""></a> -->
+    </div>
+</header>
+    <div class="lugar">
+      <div class="calculadora">
+        <h1>Simule Aqui!</h1>
+
+        <p class="texto">
+          Simule com a gente e veja como nossa solução pode transformar sua
+          produção!
+        </p>
+        <div class="input-group">
+          <label>Informe o tamanho da sua área de cultivo em M²:</label>
+          <input type="number" id="ipt_area" />
+          <label>Informe o peso da colheita em Kg:</label>
+          <input type="number" id="ipt_quilos" />
+          <label>Informe o seu preço de venda por quilo em R$:</label>
+          <input type="number" id="ipt_preco" />
+        </div>
+        <button onclick="calcular()">Resultado</button>
+        <div id="div_mensagem"></div>
+      </div>
+    </div>
+    <script>
+      function calcular() {
+        var area = Number(ipt_area.value);
+        var preco = Number(ipt_preco.value);
+        var quilos = Number(ipt_quilos.value);
+        var lucro_sem_sistema = (preco * quilos * 80) / 100;
+        var lucro_com_sistema = preco * quilos;
+        var alcance_sensor = 1000;
+        var qtdsensor_pra_area = Math.ceil(area / alcance_sensor);
+        if (area && quilos && preco) {
+          div_mensagem.innerHTML = `
+          Para o monitoramento adequado da sua area de ${area} m², nós sugerimos a aquisição de ${qtdsensor_pra_area} sensores.
+          <br>
+          obs: Os nossos sensores tem a capacidade de monitorar adequadamente 1000 m², portanto, o calculo realizado na sugestão de aquisição é com base no tamanho
+          da zona de cultivo informada
+          <br>
+          Atualmente, considerando um aproveitamento médio de 80% , o seu lucro estimado é R$ ${lucro_sem_sistema.toFixed(
+            2
+          )}
+          <br>
+          Com o sistema de monitoramento  da Water Works, o seu lucro é potencializado, atingindo 100% de eficiência, garantindo o pontencial total
+          da platanção, o lucro pode chegar a <strong>R$${lucro_com_sistema.toFixed(2)}!!!</strong>.`;
+        } else {
+          div_mensagem.innerHTML =
+            "Por favor, preencha os campos corretamente.";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqua</title>
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+    <main id="main_container">
+        <div id="left_login">
+            <h1>Faça o seu login e inove <br> a sua empresa com  <br> a Water Works!</h1>
+            <img id="img_water_drop" src="../imagens/coffee-farm-animate.svg" alt="">
+        </div>
+        
+        </div>
+        <div id="login_right">
+            <form id="login_form">
+            <div id="header">
+                <h1>LOGIN</h1>
+                <a href="./tela_de_cadastro.html">Cadastrar</a>
+            </div>
+
+            <div id="div_input">
+                <div class="input-box">
+                    <span id="input_text">Email:</span><br>
+                    <input type="text" placeholder="example@gmail.com" id="inp_user"> <br>
+                    <div class="mensagemErro" id="div_email"></div>
+                    <span id="input_text">Senha:</span><br>
+                    <input type="password" placeholder="********" id="inp_senha"><br>
+                </div>
+            </div>
+
+            <button onclick="entrar()" type="button" id="btn_login">Entrar</button>
+            <!-- <button onclick="suporte()" type="button" id="btn_login">Suporte</button> -->
+        </form>
+       </div>
+        
+        
+    </main>
+
+
+    
+
+
+</body>
+</html>
+
+<script>
+    
+//     function suporte() {
+
+// var emailVar = inp_user.value;
+// var senhaVar = inp_senha.value;
+
+// if (emailVar == 'suportewaterworks@gmail.com' && senhaVar == 'Sptech/2024') {
+
+//     window.location='http://localhost:3001';
+
+// } else {
+
+//     alert(`Suporte inválido`);
+
+// }
+
+// }
+
+function entrar() {
+
+        var emailVar = inp_user.value;
+        var senhaVar = inp_senha.value;
+
+        if (emailVar == 'suportewaterworks@gmail.com' && senhaVar == 'Sptech/2024') {
+
+        window.location='http://localhost:3001';
+        }
+
+        if (emailVar == "" || senhaVar == "") {
+            alert("(Mensagem de erro para todos os campos em branco)");
+            return false;
+        }
+        else {
+        }
+
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.idUSER;
+                    sessionStorage.FK_EMPRESA = json.fkEmpresa;
+                    sessionStorage.EMP_NOME = json.empNome
+
+                        window.location = "./DashboardV2.html";
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+
+    const mode = icon_modo;
+
+    mode.addEventListener('click', () => {
+    const form = document.getElementById('login_form');
+    const container = main_container
+    const botao = btn_login
+    const text_filde = div_input
+    const esq_senha = esqueceu_senha
+
+    if(mode.classList.contains('fa-moon')) {
+        mode.classList.remove('fa-moon');
+        mode.classList.add('fa-sun');
+
+        esq_senha.classList.add('dark')
+        text_filde.classList.add('dark')
+        botao.classList.add('dark');
+        container.classList.add('dark');
+        form.classList.add('dark');
+        return ;
+    }
+    
+    mode.classList.remove('fa-sun');
+    mode.classList.add('fa-moon');
+
+    esq_senha.classList.remove('dark')
+    text_filde.classList.remove('dark')
+    botao.classList.remove('dark')
+    container.classList.remove('dark');
+    form.classList.remove('dark');
+});
+
+</script>
