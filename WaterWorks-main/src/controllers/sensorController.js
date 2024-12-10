@@ -44,8 +44,8 @@ function graficoMensal(req, res) {
 }
 
 function umiMax(req, res) {
-    var idPlant = req.body.idPServer;
-    var idEmpresa = req.body.idEmpServer;
+    var idPlant = req.body.idPlant;
+    var idEmpresa = req.body.idEmpresa;
     console.log('TO NO CONTROLLER');
 
     if (idPlant == undefined) {
@@ -67,17 +67,19 @@ function umiMax(req, res) {
 
 function umiMin(req, res) {
     var idPlant = req.body.idPlant;
-    var idEmpresa = req.body.idEmpServer;
+    var idEmpresa = req.body.idEmpresa;
 
     if (idPlant == undefined) {
         res.status(400).send("Plantação não definida (umidade mínima)")
     }
 
-    sensorModel.umiMin(idPlant, idEmpresa).then(function(resposta){
-        res.status(200).send("Umidade mínima selecionada")
+    sensorModel.umiMin(idPlant, idEmpresa)
+    .then(
+      function(resposta){
         res.json({
             min: resposta[0].Minimo
         })
+        res.status(200).send("Umidade mínima selecionada")
     }).catch(function(erro){
         res.status(500).json(erro.sqlMensage)
     })
