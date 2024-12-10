@@ -35,7 +35,7 @@
                     <li>
                         <a href="#" id="liSelectBtn">
                             <i><img src="../imgs - Home/icons/plantar.png" alt=""></i> <br>
-                            <select name="plantacoes" id="listaPlant" onchange="chamar(), kpiMaxMin(), mostrarGrafico()">
+                            <select name="plantacoes" id="listaPlant" onchange="chamar(), kpiMaxMin(), mostrarGrafico(), atlGraficoDiario(), atlGraficoMensal()">
                                 <option value="#" selected>Selecione sua plantação</option>
                             </select>
                         </a>
@@ -172,6 +172,8 @@
     var dtHora = [];
     let proximaAtualizacao;
     let proximaAtualizacao2;
+    let kpiAtualizadaMax;
+    let kpiAtualizadaMin;
 
     function listarPlant() {
         var fkEmpresa = sessionStorage.FK_EMPRESA;
@@ -371,17 +373,22 @@
     function kpiMaxMin() {    
         umidadeMaxima()
         umidadeMinima()
+        atlKpi()
     }
 
     function atlGraficoDiario() {
         proximaAtualizacao2 = setInterval(() => graficoDiario(), 3000);
-        proximaAtualizacao = '';
     }
 
     function atlGraficoMensal() {
         proximaAtualizacao = setInterval(() => graficoMensal(), 3000);
-        proximaAtualizacao2 = ''
     }
+
+    function atlKpi() {
+        kpiAtualizadaMax = setInterval(() => umidadeMaxima(), 3000);
+        kpiAtualizadaMin = setInterval(() => umidadeMinima(), 3000);
+    }
+
 
     // BACK-END FIM
 

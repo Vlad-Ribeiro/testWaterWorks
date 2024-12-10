@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 function graficoDiario(idPLANTACAO) {
     var instrucao = `
-    SELECT p.nome as Plantação, dadoSensor as dadoSensor, dataRegistro AS dtRegistro FROM plantacao as p JOIN sensor on fkPlantacao = idPLANTACAO 
+    SELECT p.nome as Plantação, dadoSensor as dadoSensor, HOUR(dataRegistro) AS dtRegistro FROM plantacao as p JOIN sensor on fkPlantacao = idPLANTACAO 
 	JOIN registro as dados on fkSensor = idSensor 
     WHERE idPLANTACAO = ${idPLANTACAO} and date(dataRegistro) = curdate() order by dataRegistro DESC limit 24;`
 
